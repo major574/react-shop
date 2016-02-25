@@ -19032,51 +19032,122 @@ module.exports = require('./lib/React');
 
 },{"./lib/React":53}],159:[function(require,module,exports){
 var React = require('react');
-var ListItem = require('./ListItem.jsx');
+var NavItem = require('./NavItem.jsx');
 
-var ingredients = [{ "id": 1, "text": "ham" }, { "id": 2, "text": "cheese" }, { "id": 3, "text": "bread" }];
-var List = React.createClass({
-    displayName: 'List',
+var NavBar = React.createClass({
+	displayName: 'NavBar',
 
-    render: function () {
-        var listItems = ingredients.map(function (item) {
-            return React.createElement(ListItem, { key: item.id, ingredient: item.text });
-        });
-        return React.createElement(
-            'ul',
-            null,
-            listItems
-        );
-    }
+	render: function () {
+
+		var navStyle = {
+			WebkitBoxShadow: "0 0 4px rgba(0,0,0,0.4)",
+			MozBoxShadow: "0 0 4px rgba(0,0,0,0.4)",
+			boxShadow: "0 0 4px rgba(0,0,0,0.4)",
+			borderRadius: 0
+		};
+
+		var titleStyle = {};
+		var linkStyle = {};
+
+		if (this.props.bgColor) {
+			navStyle.background = this.props.bgColor;
+		};
+
+		if (this.props.titleColor) {
+			titleStyle.color = this.props.titleColor;
+		};
+
+		if (this.props.linkColor) {
+			linkStyle.color = this.props.linkColor;
+		};
+
+		var createLinkItem = function (item, index) {
+			return React.createElement(NavItem, { aStyle: linkStyle, key: item.title + index, href: item.href, title: item.title });
+		};
+
+		return React.createElement(
+			'div',
+			null,
+			React.createElement(
+				'nav',
+				{ style: navStyle, className: 'navbar navbar-default' },
+				React.createElement(
+					'div',
+					{ className: 'navbar-header' },
+					React.createElement(
+						'button',
+						{ type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#nav-collapse' },
+						React.createElement('span', { className: 'icon-bar' }),
+						React.createElement('span', { className: 'icon-bar' }),
+						React.createElement('span', { className: 'icon-bar' })
+					),
+					React.createElement(
+						'a',
+						{ style: titleStyle, className: 'navbar-brand', href: '#' },
+						'Product Shop'
+					)
+				),
+				React.createElement(
+					'div',
+					{ className: 'collapse navbar-collapse', id: 'nav-collapse' },
+					React.createElement(
+						'ul',
+						{ className: 'nav navbar-nav' },
+						this.props.navData.map(createLinkItem)
+					)
+				)
+			)
+		);
+	}
 });
 
-module.exports = List;
+module.exports = NavBar;
 
-},{"./ListItem.jsx":160,"react":158}],160:[function(require,module,exports){
+},{"./NavItem.jsx":160,"react":158}],160:[function(require,module,exports){
 var React = require('react');
-var ListItem = React.createClass({
-    displayName: 'ListItem',
+var NavItem = React.createClass({
+	displayName: "NavItem",
 
-    render: function () {
-        return React.createElement(
-            'li',
-            null,
-            React.createElement(
-                'h4',
-                null,
-                this.props.ingredient
-            )
-        );
-    }
+	getInitialState: function () {
+		return { hover: false };
+	},
+	mouseOver: function (e) {
+		this.setState({ hover: true });
+	},
+	mouseOut: function (e) {
+		this.setState({ hover: false });
+	},
+	render: function () {
+		return React.createElement(
+			"li",
+			{ className: this.state.hover ? "active" : "", onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
+			React.createElement(
+				"a",
+				{ style: this.props.aStyle, href: this.props.href },
+				this.props.title
+			)
+		);
+	}
 });
 
-module.exports = ListItem;
+module.exports = NavItem;
 
 },{"react":158}],161:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
-var List = require('./components/List.jsx');
+var NavBar = require('./components/nav/NavBar.jsx');
 
-ReactDOM.render(React.createElement(List, null), document.getElementById('ingredients'));
+var navLinks = [{
+	title: "Home",
+	href: "#"
+}, {
+	title: "Courses",
+	href: "#"
+}, {
+	title: "Blog",
+	href: "#"
+}];
 
-},{"./components/List.jsx":159,"react":158,"react-dom":29}]},{},[161]);
+ReactDOM.render(React.createElement(NavBar, { bgColor: '#FFF', titleColor: '#3097d1', navData: navLinks }), document.getElementById('nav'));
+
+},{"./components/nav/NavBar.jsx":159,"react":158,"react-dom":29}]},{},[161]);

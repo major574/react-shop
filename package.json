@@ -1,5 +1,5 @@
 {
-  "name": "react-skeleton",
+  "name": "react-shop",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/major574/react-skeleton.git"
+    "url": "git+https://github.com/major574/react-shop.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/major574/react-skeleton/issues"
+    "url": "https://github.com/major574/react-shop/issues"
   },
-  "homepage": "https://github.com/major574/react-skeleton#readme",
+  "homepage": "https://github.com/major574/react-shop#readme",
   "dependencies": {
     "babel-preset-react": "^6.5.0",
     "babelify": "^7.2.0",
